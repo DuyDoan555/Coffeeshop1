@@ -1,5 +1,4 @@
-﻿using coffeeshop.Data;
-using coffeeshop.Models.Interfaces;
+﻿using coffeeshop.Models.Interfaces;
 using coffeeshop.Models;
 using Coffeeshop1.Models.Services; // Thêm using này để sử dụng Product
 
@@ -16,17 +15,17 @@ namespace CoffeeshopTH.Models.Services
 
         public IEnumerable<Product> GetAllProducts()
         {
-            return (IEnumerable<Product>)dbContext.Products; // Bỏ casting không cần thiết
+            return dbContext.Products.Cast<Product>(); // Ensure proper casting  
         }
 
         public Product? GetProductDetail(int id)
         {
-            return dbContext.Products.FirstOrDefault(p => p.Id == id);
+            return dbContext.Products.Cast<Product>().FirstOrDefault(p => p.Id == id); // Ensure proper casting  
         }
 
         public IEnumerable<Product> GetTrendingProducts()
         {
-            return dbContext.Products.Where(static p => p.IsTrendingProduct); // Bỏ static keyword
+            return dbContext.Products.Cast<Product>().Where(p => p.IsTrendingProduct); // Ensure proper casting  
         }
     }
 }
